@@ -33,6 +33,24 @@ u8 = encoding.UTF8
 function sampev.onServerMessage(color, text)
     if isScriptActivate == true then
         if text:find("Вы загрузили") and color == 865730559 then
+            local file = io.open(getGameDirectory().."//moonloader//durationoftrip.txt", "a+")
+            local isComp = false
+            for line in file:lines() do
+                if isCompareText(Text .. "=0", line) then
+                    isComp = true
+                end    
+            point1, point2 = splitPointfromText(line)
+            sampAddChatMessage(point1, 0x0099e5)
+            sampAddChatMessage(point2, 0x0099e5)
+            point3, point4 = splitPointfromText(string.format(Text .. "=0"))       
+            end
+            sampAddChatMessage(point3, 0x0099e5)
+            sampAddChatMessage(point4, 0x0099e5)   
+            if isComp == false then
+            file:write(Text .. "=0\n")
+            end
+            file:close()
+        ----------------------------------------------------------------
             pickEd = tonumber(string.match(text, "{FFAA00}(%d+)"))
             if percent ~=0 then
                 sumEarn = (pickEd * sumForEd) - ((pickEd * sumForEd) * percent / 100)
@@ -42,10 +60,6 @@ function sampev.onServerMessage(color, text)
             isDialog2 = true
         end
         if text:find("Вы привезли") and color == 865730559 then
-            local file = io.open(getGameDirectory().."//moonloader//file.txt", "a")
-            file:write(Text .. "\n")
-            file:close()
-
             local pattern1 = "{FFAA00}(%d+)"
             local res1 = string.match(text, pattern1)
             local money = tonumber(string.match(text, "{00cc99}(%d+)"))
@@ -166,8 +180,26 @@ function activateScript(arg)
     isScriptActivate = not isScriptActivate
 
     if isScriptActivate == true then
+        sampAddChatMessage(string.match("Нефтезавод - Казино Камелот=0", "(.*)%s%-", 1), 0x0099e5)
         sampAddChatMessage("Truck Trips Informer: {34bf49}[enabled]", 0x0099e5)
     else
         sampAddChatMessage("Truck Trips Informer: {ff4c4c}[diabled]", 0x0099e5)
+    end
+end
+
+function splitPointfromText(str)
+    local point1 = string.match(str, "(.*)%s%-", 1)
+    local point2 = string.match(str, "%-%s(.*)=%d*", 1)
+    return point1, point2
+end
+
+function isCompareText(str1, str2)
+    local part1_str1, part2_str1 = splitPointfromText(str1)
+    local part1_str2, part2_str2 = splitPointfromText(str2)
+    if part1_str1 and part1_str2 and part2_str1 and part2_str2 then
+        return (part1_str1 == part1_str2 and part2_str1 == part2_str2) or
+               (part1_str1 == part2_str2 and part2_str1 == part1_str2)
+    else
+        return false
     end
 end
