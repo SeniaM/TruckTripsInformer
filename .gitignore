@@ -1,0 +1,112 @@
+AutoReboot.lua
+chat.lua.bac
+chat.rar
+check-moonloader-updates.lua
+dialog.rar
+file.txt
+file1.txt
+moonloader.log
+Police Helper Reborn.luac.buc
+reload_all.lua
+SF Integration.lua
+config/config.ini
+config/moonloader/configIni.ini
+lib/base64.dll
+lib/bitex.lua
+lib/cjson.dll
+lib/des56.dll
+lib/effil.lua
+lib/encoding.lua
+lib/getNames.lua
+lib/iconv.dll
+lib/json2lua.lua
+lib/lfs.dll
+lib/libeffil.dll
+lib/ltn12.lua
+lib/lua2json.lua
+lib/matrix3x3.lua
+lib/md5.lua
+lib/mime.lua
+lib/MoonAdditions.dll
+lib/moonloader.lua
+lib/RakLua.lua
+lib/RakLuaDll.dll
+lib/requests.lua
+lib/sampfuncs.lua
+lib/socket.lua
+lib/ssl.dll
+lib/ssl.lua
+lib/vector3d.lua
+lib/vkeys.lua
+lib/cjson/util.lua
+lib/game/globals.lua
+lib/game/keys.lua
+lib/game/models.lua
+lib/game/modelsVeh.lua
+lib/game/weapons.lua
+lib/iconv/COPYING-libiconv
+lib/iconv/README-libiconv
+lib/iconv/README-lua-iconv
+lib/lub/Autoload.lua
+lib/lub/Dir.lua
+lib/lub/init.lua
+lib/lub/Param.lua
+lib/lub/Template.lua
+lib/md5/core.dll
+lib/mime/core.dll
+lib/mimgui/cdefs.lua
+lib/mimgui/cimguidx9.dll
+lib/mimgui/dx9.lua
+lib/mimgui/imgui.lua
+lib/mimgui/init.lua
+lib/MoonMonet/init.lua
+lib/MoonMonet/moonmonet_rs.dll
+lib/PoliceHelper/fAwesome5.lua
+lib/PoliceHelper/fAwesome6.lua
+lib/PoliceHelper/mimgui_piemenu.lua
+lib/samp/events.lua
+lib/samp/raknet.lua
+lib/samp/synchronization.lua
+lib/samp/events/bitstream_io.lua
+lib/samp/events/core.lua
+lib/samp/events/extra_types.lua
+lib/samp/events/handlers.lua
+lib/samp/events/utils.lua
+lib/socket/core.dll
+lib/socket/ftp.lua
+lib/socket/headers.lua
+lib/socket/http.lua
+lib/socket/smtp.lua
+lib/socket/tp.lua
+lib/socket/url.lua
+lib/ssl/https.lua
+lib/windows/init.lua
+lib/windows/message.lua
+lib/xml/core.dll
+lib/xml/init.lua
+lib/xml/Parser.lua
+Police Helper Reborn/config.json
+Police Helper Reborn/configTemp.json
+Police Helper Reborn/installationDate
+Police Helper Reborn/Police Helper Reborn.luac
+Police Helper Reborn/userBinds.json
+Police Helper Reborn/userDialogs.json
+Police Helper Reborn/userQMs - Copy.json
+Police Helper Reborn/userQMs.json
+Police Helper Reborn/userWeaponBinds.json
+Police Helper Reborn/fonts/Acrom-Bold.ttf
+Police Helper Reborn/fonts/Kameron-Bold.ttf
+Police Helper Reborn/fonts/Montserrat-Bold.ttf
+Police Helper Reborn/fonts/OpenSans-Bold.ttf
+Police Helper Reborn/fonts/OpenSans-SemiBold.ttf
+Police Helper Reborn/fonts/seguisb.ttf
+Police Helper Reborn/spurs/10-55.json
+Police Helper Reborn/spurs/10-66.json
+Police Helper Reborn/spurs/uk short.json
+Police Helper Reborn/spurs/АК.json
+Police Helper Reborn/spurs/Обозначения.json
+Police Helper Reborn/spurs/Ситуационные коды.json
+Police Helper Reborn/spurs/Смена.json
+Police Helper Reborn/spurs/Тен-коды.json
+Police Helper Reborn/spurs/Типы патрулей.json
+Police Helper Reborn/spurs/УК.json
