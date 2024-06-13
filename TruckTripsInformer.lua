@@ -164,7 +164,7 @@ end
 
 function activateScript(arg)
     isScriptActivate = not isScriptActivate
-    
+
     if isScriptActivate == true then
         sampAddChatMessage("Truck Trips Informer: {34bf49}[enabled]", 0x0099e5)
     else
