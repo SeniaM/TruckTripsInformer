@@ -43,7 +43,7 @@ function sampev.onServerMessage(color, text)
         end
         if text:find("Вы привезли") and color == 865730559 then
             local file = io.open(getGameDirectory().."//moonloader//file.txt", "a")
-            file:write(text)
+            file:write(Text .. "\n")
             file:close()
 
             local pattern1 = "{FFAA00}(%d+)"
