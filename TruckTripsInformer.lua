@@ -43,48 +43,54 @@ function sampev.onServerMessage(color, text)
             
         ----------------------------------------------------------------
             pickEd = tonumber(string.match(text, "{FFAA00}(%d+)"))
-            if percent ~=0 then
-                sumEarn = tonumber((pickEd * sumForEd) - ((pickEd * sumForEd) * percent / 100))
-            else
-                sumEarn = pickEd * sumForEd
+            if sumForEd ~= nil then
+                if percent ~=0 then
+                    sumEarn = tonumber((pickEd * sumForEd) - ((pickEd * sumForEd) * percent / 100))
+                else
+                    sumEarn = pickEd * sumForEd
+                end
+                isDialog2 = true
+            else 
+                isDialog2 = false
+                sampAddChatMessage("—крипт был активирован после выбора заказа.", 0xff8080)
+                sampAddChatMessage("»нформаци€ станет доступна после вз€ти€ следующего заказа.", 0xff8080)
             end
-            isDialog2 = true
         end
         if text:find("¬ы привезли") and color == 865730559 then
-            endTimer = os.clock()
-            currentTimeTrip = endTimer - startTimer
-            local isComp = false
-            local content = readFileToTable(filePathDuration)    
-            for i, line in ipairs(content) do
-                if isCompareText(Text .. "=0", line) then
-                    isComp = true
-                    timeOfTripFromFile = tonumber(string.match(line ,"=(%d*)"))
-                    if timeOfTripFromFile < currentTimeTrip then
-                        content[i] = Text .. "=" .. currentTimeTrip
-                    end
-                end      
-            end
+            if Text ~= nil then
+                endTimer = os.clock()
+                currentTimeTrip = endTimer - startTimer
+                local isComp = false
+                local content = readFileToTable(filePathDuration)    
+                for i, line in ipairs(content) do
+                    if isCompareText(Text .. "=0", line) then
+                        isComp = true
+                        timeOfTripFromFile = tonumber(string.match(line ,"=(%d*)"))
+                        if timeOfTripFromFile < currentTimeTrip then
+                            content[i] = Text .. "=" .. currentTimeTrip
+                        end
+                    end      
+                end
 
-            if isComp == true then
-                saveTableToString(filePathDuration, content)
-            else
-                local file = io.open(filePathDuration,"a+")
-                file:write(Text .. "=" .. currentTimeTrip .. "\n")
-                file:close()
-            end
-            ---------------------------------------------------------------
-            local pattern1 = "{FFAA00}(%d+)"
-            local res1 = string.match(text, pattern1)
-            local money = tonumber(string.match(text, "{00cc99}(%d+)"))
-            local commissionInDollar = tonumber(string.match(text, "{ff8080}(%d+)"))
-            
-            if commissionInDollar ~= 0 then
-                percent = math.floor(commissionInDollar / (money / 100))
-            end
-            moneyBox = moneyBox + money
-            numberOfTrips = numberOfTrips + 1
+                if isComp == true then
+                    saveTableToString(filePathDuration, content)
+                else
+                    local file = io.open(filePathDuration,"a+")
+                    file:write(Text .. "=" .. currentTimeTrip .. "\n")
+                    file:close()
+                end
+                
+                local money = tonumber(string.match(text, "{00cc99}(%d+)")) -- заработано денег за поездку
+                local commissionInDollar = tonumber(string.match(text, "{ff8080}(%d+)")) -- комисси€ компании
+                
+                if commissionInDollar ~= 0 then
+                    percent = math.floor(commissionInDollar / (money / 100))
+                end
+                moneyBox = moneyBox + money
+                numberOfTrips = numberOfTrips + 1
 
-            isPrintStat = true
+                isPrintStat = true
+            end
         end
     end
 end
@@ -98,19 +104,14 @@ function onSendRpc(id, bitStream, priority, reliability, orderingChannel, shiftT
                 if bResponse == 1 then
                     local wListItem    = raknetBitStreamReadInt16(bitStream)
                     local bTextLength  = raknetBitStreamReadInt8(bitStream)
-                        Text         = raknetBitStreamReadString(bitStream, bTextLength)
+                          Text         = raknetBitStreamReadString(bitStream, bTextLength)
                     local textItem     = sampGetListboxItemText(wListItem)
                     local res          = get_line_from_list(decodedString, wListItem + 1)
-                    local pattern1 = "%s(%d*)%$"
 
-                    local pattern2 = "(%d*)/" 
-                    local pattern3 = "/(%d*)"
-                    
                     Text = string.sub(Text, 1, #Text-4)
-                    local sum = tonumber(string.match(res, pattern1))
-                    local ed1 = string.match(res, pattern2)
-                    local ed2 = string.match(res, pattern3)
-                    sumForEd = sum
+                    sumForEd = tonumber(string.match(res, "%s(%d*)%$")) --получает стоимость за единицу груза
+                    local ed1 = string.match(res, "(%d*)/") --получает доступный вес груза
+                    local ed2 = string.match(res, "/(%d*)") --получает общий вес груза
                     isDialog1 = true
                 end
             end
