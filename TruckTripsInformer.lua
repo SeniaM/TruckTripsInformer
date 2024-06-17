@@ -62,16 +62,9 @@ function sampev.onServerMessage(color, text)
                     if timeOfTripFromFile < currentTimeTrip then
                         content[i] = Text .. "=" .. currentTimeTrip
                     end
-                    sampAddChatMessage(timeOfTripFromFile, 0x0099e5)
-                end    
-                point1, point2 = splitPointfromText(line)
-                sampAddChatMessage(point1, 0x0099e5)
-                sampAddChatMessage(point2, 0x0099e5)
-                point3, point4 = splitPointfromText(string.format(Text .. "=0"))       
+                end      
             end
 
-            sampAddChatMessage(point3, 0x0099e5)
-            sampAddChatMessage(point4, 0x0099e5)   
             if isComp == true then
                 saveTableToString(filePathDuration, content)
             else
@@ -115,13 +108,8 @@ function onSendRpc(id, bitStream, priority, reliability, orderingChannel, shiftT
                     
                     Text = string.sub(Text, 1, #Text-4)
                     local sum = tonumber(string.match(res, pattern1))
-                    --sum = string.sub(sum, 1, #sum-1)
                     local ed1 = string.match(res, pattern2)
                     local ed2 = string.match(res, pattern3)
-                    sampAddChatMessage(res, 0x0099e5)
-                    sampAddChatMessage(sum, 0x0099e5)
-                    sampAddChatMessage(ed1, 0x0099e5)
-                    sampAddChatMessage(ed2, 0x0099e5)
                     sumForEd = sum
                     isDialog1 = true
                 end
@@ -143,9 +131,6 @@ function onReceiveRpc(id, bs)
             local bButton2Len     = raknetBitStreamReadInt8(bs)
             local szButton2       = raknetBitStreamReadString(bs, bButton2Len)
             decodedString = raknetBitStreamDecodeString(bs, 4096)
-            local file = io.open(getGameDirectory().."//moonloader//List.txt", "a+") --remove this
-            file:write(decodedString)
-            file:close()
         end
    end
 end
@@ -207,7 +192,6 @@ function activateScript(arg)
     isScriptActivate = not isScriptActivate
 
     if isScriptActivate == true then
-        sampAddChatMessage(string.match("Нефтезавод - Казино Камелот=0", "(.*)%s%-", 1), 0x0099e5)
         sampAddChatMessage("Truck Trips Informer: {34bf49}[enabled]", 0x0099e5)
     else
         sampAddChatMessage("Truck Trips Informer: {ff4c4c}[diabled]", 0x0099e5)
@@ -221,11 +205,11 @@ function splitPointfromText(str)
 end
 
 function isCompareText(str1, str2)
-    local part1_str1, part2_str1 = splitPointfromText(str1)
-    local part1_str2, part2_str2 = splitPointfromText(str2)
-    if part1_str1 and part1_str2 and part2_str1 and part2_str2 then
-        return (part1_str1 == part1_str2 and part2_str1 == part2_str2) or
-               (part1_str1 == part2_str2 and part2_str1 == part1_str2)
+    local part1Str1, part2Str1 = splitPointfromText(str1)
+    local part1Str2, part2Str2 = splitPointfromText(str2)
+    if part1Str1 and part1Str2 and part2Str1 and part2Str2 then
+        return (part1Str1 == part1Str2 and part2Str1 == part2Str2) or
+               (part1Str1 == part2Str2 and part2Str1 == part1Str2)
     else
         return false
     end
