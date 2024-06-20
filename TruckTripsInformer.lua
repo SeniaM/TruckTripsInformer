@@ -23,6 +23,7 @@ local sumEarn
 local decodedString
 --------Timer----------
 local timeOfTripFromFile
+local loadTimeOfTripFromFile
 local startTimer
 local endTimer
 local currentTimeTrip
@@ -39,21 +40,40 @@ u8 = encoding.UTF8
 function sampev.onServerMessage(color, text)
     if isScriptActivate == true then
         if text:find("Вы загрузили") and color == 865730559 then
-            startTimer = os.clock()
-            
-        ----------------------------------------------------------------
-            pickEd = tonumber(string.match(text, "{FFAA00}(%d+)"))
-            if sumForEd ~= nil then
-                if percent ~=0 then
-                    sumEarn = tonumber((pickEd * sumForEd) - ((pickEd * sumForEd) * percent / 100))
-                else
-                    sumEarn = pickEd * sumForEd
+            if Text ~= nil then
+                startTimer = os.clock()
+            ----------------------------------------------------------------
+                local content = readFileToTable(filePathDuration)
+                for i, line in ipairs(content) do
+                    if isCompareText(Text .. "=0", line) then
+                        loadTimeOfTripFromFile = tonumber(string.match(line ,"=(%d*)"))
+                        if loadTimeOfTripFromFile == 0 then
+                            loadTimeOfTripFromFile = "Пока не определено."  
+                        else
+                        loadTimeOfTripFromFile = tostring(math.floor(loadTimeOfTripFromFile/60)) .. " мин. " .. tostring(math.floor(loadTimeOfTripFromFile) - (math.floor(loadTimeOfTripFromFile/60) * 60)) .. " сек."
+                        end
+                        break
+                        --if timeOfTripFromFile ~= 0 then
+                        --    content[i] = Text .. "=" .. currentTimeTrip
+                        --end
+                    else
+                        loadTimeOfTripFromFile = "Пока не определено."
+                    end      
                 end
-                isDialog2 = true
-            else 
-                isDialog2 = false
-                sampAddChatMessage("Скрипт был активирован после выбора заказа.", 0xff8080)
-                sampAddChatMessage("Информация станет доступна после взятия следующего заказа.", 0xff8080)
+            ----------------------------------------------------------------
+                pickEd = tonumber(string.match(text, "{FFAA00}(%d+)"))
+                if sumForEd ~= nil then
+                    if percent ~=0 then
+                        sumEarn = tonumber((pickEd * sumForEd) - ((pickEd * sumForEd) * percent / 100))
+                    else
+                        sumEarn = pickEd * sumForEd
+                    end
+                    isDialog2 = true
+                else 
+                    isDialog2 = false
+                    sampAddChatMessage("Скрипт был активирован после выбора заказа.", 0xff8080)
+                    sampAddChatMessage("Информация станет доступна после взятия следующего заказа.", 0xff8080)
+                end
             end
         end
         if text:find("Вы привезли") and color == 865730559 then
@@ -66,7 +86,7 @@ function sampev.onServerMessage(color, text)
                     if isCompareText(Text .. "=0", line) then
                         isComp = true
                         timeOfTripFromFile = tonumber(string.match(line ,"=(%d*)"))
-                        if timeOfTripFromFile < currentTimeTrip then
+                        if timeOfTripFromFile > currentTimeTrip then
                             content[i] = Text .. "=" .. currentTimeTrip
                         end
                     end      
@@ -180,6 +200,7 @@ function sayTextInfo(order, amount, price)
     sampSendChat(string.format("/do Маршрут: %s", order))
     sampSendChat(string.format("/do Стоимостью $%s за единицу весом %sкг на сумму $%s", tostring(sumForEd), tostring(amount), tostring(price)))
     sampSendChat(string.format("/do Ожидаемая общая прибыль составит: $%d", price + moneyBox))
+    sampSendChat(string.format("/do Дорога у вас займет: %s", tostring(loadTimeOfTripFromFile)))
 end
 
 function printStat()
